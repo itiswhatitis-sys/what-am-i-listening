@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 interface Song {
@@ -62,7 +63,7 @@ export default function MusicCard() {
 
   if (loading) {
     return (
-      <section className="max-w-3xl h-[264px] mx-auto mt-6 p-4 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl">
+      <section className="max-w-3xl h-[264px] sm:mx-auto mx-4 mb-6 mt-6 p-4 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl">
         <div className="bg-purple-900/70 h-[232px] backdrop-blur-md rounded-xl shadow-lg p-6 flex items-center justify-center">
           <div className="ml-3 h-10 w-10 animate-spin rounded-full border-b-2 border-t-2 border-primary ease-linear"></div>
         </div>
@@ -72,7 +73,7 @@ export default function MusicCard() {
 
   if (needsAuth) {
     return (
-      <section className="max-w-3xl mx-auto mt-6 p-4 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl">
+      <section className="max-w-3xl sm:mx-auto mb-6 mt-6 p-4 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl mx-4">
         <div className="bg-purple-900/70 backdrop-blur-md rounded-xl shadow-lg p-6 text-center">
           <div className="text-white mb-4">
             <h3 className="text-xl font-semibold mb-2 tracking-tighter">Authorization Failed</h3>
@@ -91,7 +92,7 @@ export default function MusicCard() {
 
   if (!song) {
     return (
-      <section className="max-w-3xl mx-auto mt-6 p-4 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl">
+      <section className="max-w-3xl sm:mx-auto mt-6 p-4 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl mx-4">
         <div className="bg-purple-900/70 backdrop-blur-md rounded-xl shadow-lg p-6 text-center">
           <div className="text-white">
             <h3 className="text-xl font-semibold mb-2 tracking-tighter">No Recent Songs</h3>
@@ -109,7 +110,7 @@ export default function MusicCard() {
   }
 
   return (
-    <section className="max-w-3xl  mx-auto mt-6 p-4  bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl">
+    <section className="max-w-3xl  sm:mx-auto mt-6 mb-2 p-4  bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl mx-4 ">
       <div className="bg-purple-900/70 backdrop-blur-md rounded-xl shadow-lg p-6 grid sm:grid-cols-12 grid-cols-1 gap-4">
         <img
           src={song.image || '/album.jpg'}
@@ -130,9 +131,13 @@ export default function MusicCard() {
           </div>
 
           <div className="flex justify-between items-center mt-4 text-xl">
-            <button onClick={fetchSong} className="hover:scale-110 transition-transform" title="Refresh">
-              ⟲
-            </button>
+           <button
+            onClick={() => window.location.reload()}
+            className="hover:scale-110 transition-transform"
+            title="Refresh"
+          >
+            ⟲ 
+          </button>
             <button className="opacity-50 cursor-not-allowed">⏮</button>
             <a
             href={`https://open.spotify.com/track/${song.id}`}

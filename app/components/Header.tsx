@@ -3,6 +3,7 @@ import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -20,20 +21,31 @@ export default function Header() {
 
           {/* Desktop Only Actions */}
           <div className="hidden md:flex items-center gap-2">
+             <a
+            href="https://github.com/itiswhatitis-sys"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
             <Button variant="outline" className="flex items-center gap-1">
               <FaGithub size={20} />
               <span className="text-sm tracking-tight text-gray-300/90">Github</span>
-            </Button>
+            </Button></a>
+            <Link href="/">
             <Button variant="outline" className="flex items-center gap-1">
               <FaXTwitter size={20} />
               <span className="text-sm tracking-tight text-gray-300/90">Twitter</span>
-            </Button>
+            </Button></Link>
             <Input className="w-auto" placeholder="Search" />
+            <a
+            href="https://github.com/sponsors/itiswhatitis-sys"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
             <Button variant="outline">
               <span className="font-medium tracking-tight text-gray-300/90">
                 <span className="text-[18px]">🫶</span> Sponsor
               </span>
-            </Button>
+            </Button></a>
           </div>
         </div>
       </div>

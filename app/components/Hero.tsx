@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="flex flex-col items-center justify-center text-center">
         <div className="text-zinc-100 tracking-tighter">
           {/* Line 1 */}
-          <div className="text-3xl sm:text-5xl font-semibold">
+          <div className="text-4xl sm:text-5xl font-semibold">
             Heyy I'm <span className="text-green-500">Murali</span>
           </div>
 
@@ -34,10 +34,16 @@ export default function Hero() {
         </div>
 
         {/* Button */}
+        <a
+        href="https://github.com/itiswhatitis-sys"
+        target="_blank"
+        rel="noopener noreferrer"
+        >
         <Button variant="outline" className="mt-6 mr-2 rounded-full">
-          <FaGithub size={26} />
-          <span className="font-medium">Github</span>
+            <FaGithub size={26} />
+            <span className="font-medium">Github</span>
         </Button>
+        </a>
       </div>
     </section>
   );
