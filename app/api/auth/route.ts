@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
   const code = searchParams.get('code');
 
   if (!code) {
-    // Redirect to Spotify auth
+    // Redirect to Spotify auth with offline_access scope for refresh token
     const scopes = 'user-read-recently-played';
     const redirectUri = process.env.SPOTIFY_REDIRECT_URI!;
 
@@ -34,14 +34,25 @@ export async function GET(req: NextRequest) {
 
     const tokens = await tokenResponse.json();
 
-   if (tokens.access_token) {
-  const baseUrl = new URL(req.url).origin;
-  const response = NextResponse.redirect(`${baseUrl}/`);
-  response.headers.set('Set-Cookie', `spotify_token=${tokens.access_token}; HttpOnly; Path=/; Max-Age=3600`);
-  return response;
-} 
-else {
-      return NextResponse.json({ error: 'Failed to get token' }, { status: 400 });
+    if (tokens.access_token && tokens.refresh_token) {
+      const baseUrl = process.env.BASE_URL!;
+      const response = NextResponse.redirect(`${baseUrl}/`);
+
+      // Set access token cookie (expires in 1 hour)
+      response.headers.append(
+        'Set-Cookie',
+        `spotify_token=${tokens.access_token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Lax`
+      );
+
+      // Set refresh token cookie (expires in 30 days or more, adjust as needed)
+      response.headers.append(
+        'Set-Cookie',
+        `refresh_token=${tokens.refresh_token}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24 * 30}; SameSite=Lax`
+      );
+
+      return response;
+    } else {
+      return NextResponse.json({ error: 'Failed to get tokens' }, { status: 400 });
     }
   } catch (error) {
     console.error('Auth error:', error);
