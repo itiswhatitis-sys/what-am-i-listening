@@ -17,7 +17,13 @@ export default function MusicCard() {
   const [needsAuth, setNeedsAuth] = useState(false);
 
   useEffect(() => {
-    fetchSong();
+    fetchSong(); // initial fetch
+
+    const intervalId = setInterval(() => {
+      fetchSong(); // fetch every 10 minutes
+    }, 600000); // 600000ms = 10 minutes
+
+    return () => clearInterval(intervalId); // cleanup on unmount
   }, []);
 
   const fetchSong = async () => {
@@ -28,7 +34,6 @@ export default function MusicCard() {
         const data: Song = await response.json();
         setSong(data);
       } else if (response.status === 401) {
-        // Try to refresh token silently
         const refreshRes = await fetch('/api/refresh-token');
         if (refreshRes.ok) {
           const retry = await fetch('/api/song');
@@ -110,7 +115,7 @@ export default function MusicCard() {
   }
 
   return (
-    <section className="max-w-3xl  sm:mx-auto mt-6 mb-2 p-4  bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl mx-4 ">
+    <section className="max-w-3xl sm:mx-auto mt-6 mb-2 p-4 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl mx-4">
       <div className="bg-purple-900/70 backdrop-blur-md rounded-xl shadow-lg p-6 grid sm:grid-cols-12 grid-cols-1 gap-4">
         <img
           src={song.image || '/album.jpg'}
@@ -131,23 +136,23 @@ export default function MusicCard() {
           </div>
 
           <div className="flex justify-between items-center mt-4 text-xl">
-           <button
-            onClick={() => window.location.reload()}
-            className="hover:scale-110 transition-transform"
-            title="Refresh"
-          >
-            ⟲ 
-          </button>
+            <button
+              onClick={() => window.location.reload()}
+              className="hover:scale-110 transition-transform"
+              title="Refresh"
+            >
+              ⟲
+            </button>
             <button className="opacity-50 cursor-not-allowed">⏮</button>
             <a
-            href={`https://open.spotify.com/track/${song.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-white hover:bg-gray-300 text-black shadow-inner transition-colors rounded-full w-10 h-10 pl-1 flex items-center justify-center"
-            title="Open in Spotify"
-          >     
-          ▶
-          </a>
+              href={`https://open.spotify.com/track/${song.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white hover:bg-gray-300 text-black shadow-inner transition-colors rounded-full w-10 h-10 pl-1 flex items-center justify-center"
+              title="Open in Spotify"
+            >
+              ▶
+            </a>
             <button className="opacity-50 cursor-not-allowed">⏭</button>
             <button className="opacity-50 cursor-not-allowed"></button>
           </div>

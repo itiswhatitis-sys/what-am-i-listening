@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   let { response, data } = await fetchSong(spotify_token);
 
   // If unauthorized, try refresh
-  if (response.status === 401 && cookies['spotify_refresh']) {
+  if (response.status === 401 && cookies['refresh_token']) {
     const refreshRes = await fetch(`${process.env.BASE_URL}/api/refresh-token`, {
       headers: { cookie: cookieHeader },
     });
