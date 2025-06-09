@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
-  let cookieHeader = req.headers.get('cookie') || '';
-  let cookies = Object.fromEntries(cookieHeader.split('; ').map(c => c.split('=')));
+  const cookieHeader = req.headers.get('cookie') || '';
+  const cookies = Object.fromEntries(cookieHeader.split('; ').map(c => c.split('=')));
   let spotify_token = cookies['spotify_token'];
 
   async function fetchSong(token: string) {
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
       id: track.id,
       name: track.name,
       played_at: item.played_at,
-      artists: track.artists.map((a: any) => a.name).join(', '),
+      artists: (track.artists as { name: string }[]).map(a => a.name).join(', '),
       album: track.album.name,
       image: track.album.images?.[0]?.url || null,
     });
