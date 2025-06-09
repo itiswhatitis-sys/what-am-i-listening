@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";

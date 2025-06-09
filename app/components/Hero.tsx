@@ -10,7 +10,7 @@ export default function Hero() {
         <div className="text-zinc-100 tracking-tighter">
           {/* Line 1 */}
           <div className="text-4xl sm:text-5xl font-semibold">
-            Heyy I'm <span className="text-green-500">Murali</span>
+            Heyy I&apos;m <span className="text-green-500">Murali</span>
           </div>
 
           {/* Line 2 */}
